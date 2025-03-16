@@ -1,36 +1,39 @@
 #include <stdio.h>
 
-int main() {
-    printf("---------------Iniciando movimentação da Torre---------------\n");
-    int i = 1;
-    while(i <= 5) {
-        printf("Torre: Direita\n");
-        i++;
-    }
-
-    printf("---------------Iniciando movimentação do Bispo---------------\n");
-    int j = 1;
-    do {
-        printf("Bispo: Direita\n");
-        printf("Bispo: Cima\n");
-        j++;
-    } while (j <= 5);
-
-    printf("---------------Iniciando movimentação da Rainha---------------\n");
-
-    for (int k = 1; k <= 8; k++) {
-        printf("Rainha: Esquerda\n");
-    }
-
-    printf("---------------Iniciando movimentação do cavalo---------------\n");
-
-    for (int l = 1; l <= 1; l++) {
-        for(int m = 1; m <= 2; m++) {
-            printf("Cavalo: Cima\n");
+void monvimentarPeca(int qtd, char peca[20], char direcao[20]) {
+    if(qtd > 0) {
+        if (peca != "Torre" && peca != "Bispo" && peca != "Rainha" && peca != "Cavalo") {
+            printf("Peça inválida\n");
+            return;
         }
-        printf("Cavalo: Direita\n");
+        if (direcao != "Cima" && direcao != "Baixo" && direcao != "Esquerda" && direcao != "Direita") {
+            printf("Direção inválida\n");
+            return;
+        }
+
+        printf("Movimentando %s para %s\n", peca, direcao);
+        monvimentarPeca(qtd - 1, peca, direcao);
     }
 
+}
+
+int main() {
+    printf("-------Iniciando movimentação do Bispo-------\n");
+    for (int i = 1; i <= 5; i++) {
+        monvimentarPeca(1, "Bispo", "Cima");
+        monvimentarPeca(1, "Bispo", "Direita");
+    }
+
+    printf("-------Iniciando movimentação da Torre-------\n");
+    monvimentarPeca(5, "Torre", "Direita");
+    
+
+    printf("-------Iniciando movimentação da Rainha-------\n");
+    monvimentarPeca(8, "Rainha", "Esquerda");
+
+    printf("-------Iniciando movimentação do cavalo-------\n");
+    monvimentarPeca(2, "Cavalo", "Cima");
+    monvimentarPeca(1, "Cavalo", "Direita");
 
     return 0;
 }
